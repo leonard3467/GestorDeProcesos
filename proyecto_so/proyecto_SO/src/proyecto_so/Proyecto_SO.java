@@ -1,9 +1,9 @@
-package proyecto_so;
-import java.util.Scanner;
-
 /**
- * @author Miss Leo 
+ * @author Miss Leonard 
  */
+
+package proyecto_so;
+import java.util.Scanner; //Libreria para poder utilizar clase Scanner
 
 public class Proyecto_SO {
 
@@ -13,12 +13,12 @@ public class Proyecto_SO {
         
         Scanner scanner = new Scanner(System.in); // Inicializa el scanner
         
-        
         System.out.println("\nPrimero, introduzca el valor que tendra la memoria: ");
-        int memoriaTot =scanner.nextInt();
+        int memoriaTot =scanner.nextInt(); //Guarda el total de la memoria que se tiene
+        //float memoriaTot = scanner.nextFloat();
         
         System.out.println("\nAhora, introduzca el Quantum que tendra cada proceso al ejecutarse: ");
-        int quantumTot = scanner.nextInt();
+        int quantumTot = scanner.nextInt(); //Se guarda el quantum que se desea 
         
         System.out.print("\nAhora, introduzca el numero total de procesos que se van a ejecutar: "); // 
         int totProcesos = scanner.nextInt(); // Se guarda el numero de procesos que se introduce en la consola
@@ -27,28 +27,28 @@ public class Proyecto_SO {
         
         System.out.println("\nGracias, por favor introduzca los datos de cada uno de los procesos que se le piden a continuacion");
         
-        for(int i = 1; i <= totProcesos; i++){ // El siguiente for ayudará a ingresar uno por uno los datos de todos los procesos
-            System.out.println("\n--- PROCESO " + i + " ---"); // totales que se declararon al principio
-            String idProceso = "P" + i;
+        for(int i = 1; i <= totProcesos; i++){ // El siguiente for ayudará a ingresar uno por uno los datos de todos los procesos totales que se declararon al principio
+            System.out.println("\n--- PROCESO " + i + " ---"); 
+            String idProceso = "P" + i; //Indicamos proceso a teclear
             String nomProceso = "Proceso " + i;
             System.out.print("Tamano a ocupar de memoria: ");
-            int memoProceso = scanner.nextInt();
+            int memoProceso = scanner.nextInt(); //Cada tamaño se guarda en memoProceso
             System.out.print("Tiempo de rafaga: ");
-            int tiempoRafaga = scanner.nextInt();
+            int tiempoRafaga = scanner.nextInt(); //Cada rafaga guardada en tiempoRafaga
             System.out.print("Tiempo de llegada: ");
-            int tiempoLlegada = scanner.nextInt();
+            int tiempoLlegada = scanner.nextInt(); //Cada llegada guardada en timepoLlegada
             
-            procesos.insertarProceso(new Proceso(idProceso, nomProceso, memoProceso, tiempoRafaga, tiempoLlegada));
+            //Llamando al método insertarProceso dentro de la clase ColaProcesosListos, con argumentos un nuevo objeto Proceso
+            procesos.insertarProceso(new Proceso(idProceso, nomProceso, memoProceso, tiempoRafaga, tiempoLlegada)); 
         }
 
-        ColaFIFO colaFIFO = new ColaFIFO(); // Se crea la cola FIFO :D
+        //Creando Cola FIFO vacío
+        ColaFIFO colaFIFO = new ColaFIFO(); 
 
+        //Creando administrador de procesos vacío
         AdministradorProcesos administrador = new AdministradorProcesos();
         
-        administrador.simularCargaProcesos(procesos, colaFIFO, memoriaTot, quantumTot); // Se define la memoria y el Quantum
-        
-
-
+        //Llamando al método simularCargaProcesos con argumentos de proceso, colaFIIFO, memoriaTot y quantumTot
+        administrador.simularCargaProcesos(procesos, colaFIFO, memoriaTot, quantumTot); 
     }
-    
 }
