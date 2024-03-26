@@ -33,7 +33,7 @@ public class ColaFIFO { //Clase llamada Cola FIFO
 
     //Métodos para manipular la cola
     //Método para encolar
-    public void encolar(Proceso proceso) {
+    public void encolar(Proceso proceso, int quantum) {
         Nodo nuevoNodo = new Nodo(proceso); //Creamos un nuevo nodo
         if (inicio == null) { //Si tenemos nuestra cola de procesos vacía
             inicio = nuevoNodo; //El inicio de esta será el nodo creado
@@ -41,6 +41,15 @@ public class ColaFIFO { //Clase llamada Cola FIFO
             fin.siguiente = nuevoNodo; //Si no es así, el nodo se inserta al final de la cola. Fin representa el último nodo en la cola, por lo que el nodo siguiente al último nodo se establcece como el nuevo nodo.
         }
         fin = nuevoNodo; //Apuntamos a nuevo nodo
+        
+        
+        //-------------------------------------------------
+        proceso.setContador(proceso.getContador() + 1); // Incrementamos el contador del proceso
+        float tiempoEspera = proceso.getTiempoLlegada() - ((proceso.getContador()-1)*quantum); //Obteniendo el tiempo de espera del proceso, restando 1 al contador y multiplicando por el quantum
+        proceso.setTiempoEspera(tiempoEspera);
+        
+        System.out.println("\n------AYUDA-----------------El proceso "+proceso.getId()+" ha subido "+proceso.getContador()+" veces");
+        System.out.println("\n------DIOS-------------El proceso "+proceso.getId()+" tiene tiempo de espera de "+proceso.getTiempoEspera());
     }
 
     //Método para desencolar 

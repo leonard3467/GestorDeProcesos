@@ -11,9 +11,20 @@ public class Proceso { //Clase llamada Proceso
     private int tamano;
     private int tiempoServicio; 
     private int tiempoLlegada;
-    private float tiempoEspera;
+    private float tiempoEspera = 0;
     private float tiempoRespuesta;
     private float tiempoEjecucion;
+    
+    //---------------------------
+    private int contador = 0; //Inicializando contador en 0 que nos sirve para contar las veces que sube un proceso a pc
+
+    public void setContador(int contador) { //Modifica el contador
+        this.contador = contador;
+    }
+
+    public int getContador() { //Obteniendo el contador
+        return contador;
+    }
 
     //Métodos 
     public String getId() { //Obteniendo el id del proceso
@@ -68,7 +79,7 @@ public class Proceso { //Clase llamada Proceso
         return tiempoEspera;
     }
 
-    public void setTiempoEspera(int tiempoEspera) { //Recibe y asigna el tiempo de espera del proceso
+    public void setTiempoEspera(float tiempoEspera) { //Recibe y asigna el tiempo de espera del proceso
         this.tiempoEspera = tiempoEspera;
     }
     
@@ -87,5 +98,8 @@ public class Proceso { //Clase llamada Proceso
         this.tamano = tamano;
         this.tiempoServicio = tiempoServicio;
         this.tiempoLlegada = tiempoLlegada;
+        this.tiempoEspera = tiempoEspera;
+        //////////----------------------------
+        this.contador = contador;
     }
 }

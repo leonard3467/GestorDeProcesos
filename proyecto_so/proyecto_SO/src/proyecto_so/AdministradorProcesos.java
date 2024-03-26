@@ -16,14 +16,16 @@ public class AdministradorProcesos { //Clase de administrador de procesos
         int banderaEspacio=0; //Espacio de bandera inicia en 0 para controlar la asignación de memoria a los procesos.
         int tiempototal=procesos.sumarTiemposServicio(); //Nuestro tiempo total es dependiendo de la suma dada en la cola de procesos listos
         
+ 
+        
         System.out.println("\n<----->  Tiempo total de servicio de todos los procesos = "+tiempototal + " <----->");
         while ((!procesos.estaVacia() || !colaFIFO.estaVacia())|| tiempo!=tiempototal) { //Mientras haya procesos en la cola de procesos listos, haya procesos en la cola FIFO o el tiempo de la simulación no haya alcanzado el tiempo total de servicio de todos los procesos.
             // Bucle mientras existan procesos en la cola de procesos
             while(procesos.estaVacia()==false && procesos.getInicio().proceso.getTiempoLlegada()<=tiempo && banderaEspacio==0){ //Mientras la cola de procesos no esté vacia y el tiempo de llegada del primer proceso sea menor o igual al tiempo actual de la simulación y la bandera de espacio sea 0
-                Proceso proceso = procesos.getInicio().getProceso(); //Obtenemos el primer proceso de la cola
+                Proceso proceso = procesos.getInicio().getProceso(); //Obtenemos el primer proceso de la cola de procesos listos
                 if (proceso.getTamano() <= memoriaDisponible) { //Si el tamaño del proceso es menor o igual al de la memoria disponible
                     procesos.eliminarProceso(); //Se puede eliminar de la cola de procesos debido a que existe suficiente espacio
-                    colaFIFO.encolar(proceso); //Se sube a la cola FIFO
+                    colaFIFO.encolar(proceso, quantum); //Se sube a la cola FIFO
                      
                     memoriaDisponible -= proceso.getTamano(); //Restamos el tamaño de memoria que ocupa el proceso y esa es nuestra nueva memoria disponible
                     System.out.println("\n-> El proceso " + proceso.getId() + " subio a la cola de Procesos listos para ejecucion y restan " + memoriaDisponible + " unidades de memoria en el tiempo "+tiempo);    //Imprimimos datos            
@@ -38,9 +40,10 @@ public class AdministradorProcesos { //Clase de administrador de procesos
                 }     
             }
          
-            if (bandera==0 || enEjecucion==null){ //Si nuetsra bandera está en 0 ó en ejecución sigue nulo
+            if (bandera==0 || enEjecucion==null){ //Si nuestra bandera está en 0 ó en ejecución sigue nulo
                 System.out.println("--- Tiempo: " +tiempo +"  |  Memoria: "+tamanoMemoria+ "   ---"); //Imprimimos tiempo que llevamos y memoria
                 enEjecucion=colaFIFO.desencolar(); //Desencolamos para que sea el siguiente en ejecutarse en la CPU
+                
                 if (enEjecucion==null) {//Si no hay nada ejecutandose
                     System.out.println("Esperando proceso ...."); //Estamos esperando proceso
                 }else{//En otro caso
@@ -57,14 +60,15 @@ public class AdministradorProcesos { //Clase de administrador de procesos
                     System.out.println("Memoria disponible actual = "+memoriaDisponible); //Imprimimos memoria disponible actual
                     banderaEspacio=0; //Indicamos que hay suficiente espacio para cargar más procesos
                 } else{ //Si el tiempo de servicio del proceso en ejecución no ha terminado su ejecución 
-                    colaFIFO.encolar(enEjecucion); //Lo volvemos a enconlar a nuestra cola FIFO
+                    colaFIFO.encolar(enEjecucion, quantum); //Lo volvemos a enconlar a nuestra cola FIFO
                 }
                 enEjecucion=colaFIFO.desencolar(); //Se desencola el siguiente proceso de la cola FIFO para ejecutarlo en la CPU.
+                
                 if(enEjecucion==null){ //Si no hay nada ejecutandose
                         System.out.println("\nEsperando Proceso...."); //Marcamos que estamos esperando proceso
                     }else{
                     System.out.println("El proceso " + enEjecucion.getId() + " subio en el tiempo "+tiempo + " a la CPU");} //Indicamos cuando subió a CPU
-               }else{
+            }else{
                 
                 // Cuando el Quantum no se termina, pero el de rafaga ya se acabo
                  if (enEjecucion.getTiempoServicio()==0) { // Si el tiempo de servicio de nuetsro proceso en ejecución es 0
@@ -75,11 +79,12 @@ public class AdministradorProcesos { //Clase de administrador de procesos
                     memoriaDisponible += enEjecucion.getTamano(); // Se libera la memoria ocupada por el proceso que ha completado su ejecución.
                     System.out.println("El proceso "+ enEjecucion.getId()+ " ha concluido en el tiempo "+tiempo +" liberando "+enEjecucion.getTamano()+" unidades de memoria :D"); //Imprimimos
                     enEjecucion=colaFIFO.desencolar(); //Se desencola el siguiente proceso de la cola FIFO para ejecutarlo en la CPU.
+                    
                     if(enEjecucion==null){//Si no hay nada ejecutandose
                         System.out.println("Esperando Proceso...."); //Imprimimos 
                     }else{
                     System.out.println("El proceso " + enEjecucion.getId() + " subio en el tiempo "+tiempo + " a la CPU");}//Indicamos cuando subió a CPU
-                }
+                 }
             }
             
         if(enEjecucion==null){ //Si la ejecución está vacía 
