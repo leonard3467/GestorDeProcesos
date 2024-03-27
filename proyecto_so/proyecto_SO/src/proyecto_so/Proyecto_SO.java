@@ -49,7 +49,7 @@ public class Proyecto_SO {
         AdministradorProcesos administrador = new AdministradorProcesos();
         
         //Llamando al método simularCargaProcesos con argumentos de proceso, colaFIIFO, memoriaTot y quantumTot
-        administrador.simularCargaProcesos(procesos, colaFIFO, memoriaTot, quantumTot); 
+        administrador.simularCargaProcesos(procesos, colaFIFO, memoriaTot, quantumTot, totProcesos); 
 
         }
 }

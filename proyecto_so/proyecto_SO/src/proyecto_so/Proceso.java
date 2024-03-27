@@ -16,6 +16,7 @@ public class Proceso { //Clase llamada Proceso
     private float tiempoEjecucion;
     
     private int banderaTiempos = 0;
+    private int temp = 0;
     private int esperaMax;
     private int ejecutado;
     private int ejecucionMax;
@@ -145,6 +146,14 @@ public class Proceso { //Clase llamada Proceso
 
     public void setEjecucionMax(int ejecucionMax) {
         this.ejecucionMax = ejecucionMax;
+    }
+
+    public int getTemp() {
+        return temp;
+    }
+
+    public void setTemp(int temp) {
+        this.temp = temp;
     }
     
     
