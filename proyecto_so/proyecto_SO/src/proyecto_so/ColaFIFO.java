@@ -48,7 +48,7 @@ public class ColaFIFO { //Clase llamada Cola FIFO
         float tiempoEspera = proceso.getTiempoLlegada() - ((proceso.getContador()-1)*quantum); //Obteniendo el tiempo de espera del proceso, restando 1 al contador y multiplicando por el quantum
         proceso.setTiempoEspera(tiempoEspera);
         
-        System.out.println("\nEl proceso "+proceso.getId()+" ha subido "+proceso.getContador()+" veces");
+        //System.out.println("\nEl proceso "+proceso.getId()+" ha subido "+proceso.getContador()+" veces");
 //        System.out.println("Espera max de "+ proceso.getId()+ ": "+proceso.getEsperaMax());
 //        System.out.println("Ejecucion max de "+ proceso.getId()+ ": "+proceso.getEjecucionMax());
         //System.out.println("\nEl proceso "+proceso.getId()+" tiene tiempo de espera de "+proceso.getTiempoEspera());

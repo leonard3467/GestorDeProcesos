@@ -16,9 +16,9 @@ public class AdministradorProcesos { //Clase de administrador de procesos
         int banderaEspacio=0; //Espacio de bandera inicia en 0 para controlar la asignación de memoria a los procesos.
         int tiempototal=procesos.sumarTiemposServicio(); //Nuestro tiempo total es dependiendo de la suma dada en la cola de procesos listos
         
-        int esperaPromedio;
+        int esperaPromedio = 0;
         int respuestaPromedio = 0;
-        int ejecucionPromedio; 
+        int ejecucionPromedio = 0; 
         
         System.out.println("\n<----->  Tiempo total de servicio de todos los procesos = "+tiempototal + " <----->");
         while ((!procesos.estaVacia() || !colaFIFO.estaVacia())|| tiempo!=tiempototal) { //Mientras haya procesos en la cola de procesos listos, haya procesos en la cola FIFO o el tiempo de la simulación no haya alcanzado el tiempo total de servicio de todos los procesos.
@@ -64,12 +64,14 @@ public class AdministradorProcesos { //Clase de administrador de procesos
                 Quantum = quantum; //Reiniciamos quantum
                 if (enEjecucion.getTiempoServicio()==0) { //Si el tiempo de servicio del proceso en ejecución es 0 (terminó su ejecución)
                     memoriaDisponible += enEjecucion.getTamano(); //Sumammos el tamaño del proceso en ejecución a nuestra memoria disponible, liberando espacio
-                    enEjecucion.setEjecucionMax(tiempo);
+                    //enEjecucion.setEjecucionMax(tiempo);
                     System.out.println("El proceso "+ enEjecucion.getId()+ " ha concluido en el tiempo "+tiempo +" liberando "+enEjecucion.getTamano() + " unidades de memoria :D"); //Imprimimos datos
-//                    if(enEjecucion.getTemp() == 0){
-//                        enEjecucion.setEjecucionMax(tiempo);
-//                        enEjecucion.setTemp(enEjecucion.getTemp()+1);
-//                    }
+                    if(enEjecucion.getTemp() == 0){
+                        enEjecucion.setEjecucionMax(tiempo-enEjecucion.getTiempoLlegada());
+                        enEjecucion.setTemp(enEjecucion.getTemp()+1);
+                        System.out.println("Primer caso: "+enEjecucion.getId() + " --> "+enEjecucion.getEjecucionMax());
+                        ejecucionPromedio += enEjecucion.getEjecucionMax();
+                    }
                     System.out.println("Memoria disponible actual = "+memoriaDisponible); //Imprimimos memoria disponible actual
                     banderaEspacio=0; //Indicamos que hay suficiente espacio para cargar más procesos
                 } else{ //Si el tiempo de servicio del proceso en ejecución no ha terminado su ejecución 
@@ -91,13 +93,18 @@ public class AdministradorProcesos { //Clase de administrador de procesos
                 // Cuando el Quantum no se termina, pero el de rafaga ya se acabo
                  if (enEjecucion.getTiempoServicio()==0) { // Si el tiempo de servicio de nuetsro proceso en ejecución es 0
                     banderaEspacio=0; //Tenemos espacio disponible
-                    enEjecucion.setEjecucionMax(tiempo);
-                    enEjecucion.setTiempoEjecucion(tiempo - enEjecucion.getTiempoLlegada()); //
+                    //enEjecucion.setTiempoEjecucion(tiempo - enEjecucion.getTiempoLlegada()); //
                     System.out.println("\n--- Tiempo: " +tiempo +" ---");
                     Quantum=quantum; // Se reinicia el quantum
                     memoriaDisponible += enEjecucion.getTamano(); // Se libera la memoria ocupada por el proceso que ha completado su ejecución.
                     System.out.println("El proceso "+ enEjecucion.getId()+ " ha concluido en el tiempo "+tiempo +" liberando "+enEjecucion.getTamano()+" unidades de memoria XD"); //Imprimimos                 
-
+                    if(enEjecucion.getTemp() == 0){
+                        enEjecucion.setEjecucionMax(tiempo-enEjecucion.getTiempoLlegada());
+                        enEjecucion.setTemp(enEjecucion.getTemp()+1);
+                        System.out.println("Segundo caso :"+ enEjecucion.getId() + " --> " +enEjecucion.getEjecucionMax());
+                        ejecucionPromedio += enEjecucion.getEjecucionMax();
+                    }
+                    
                     enEjecucion=colaFIFO.desencolar(); //Se desencola el siguiente proceso de la cola FIFO para ejecutarlo en la CPU.
                     
                     if(enEjecucion==null){//Si no hay nada ejecutandose
@@ -121,17 +128,24 @@ public class AdministradorProcesos { //Clase de administrador de procesos
             
         enEjecucion.setTiempoEjecucion(enEjecucion.getTiempoServicio()-1);
         //System.out.println("Espera max de "+ enEjecucion.getId()+ ": "+enEjecucion.getEsperaMax());
-        System.out.println("Ejecucion max de "+ enEjecucion.getId()+ ": "+enEjecucion.getEjecucionMax());
+        //System.out.println("Ejecucion max de "+ enEjecucion.getId()+ ": "+enEjecucion.getEjecucionMax());
         
         
         } //Actualizamos el tiempo de ejecucion del proceso actual, restando 1 al tiempo de servicio restante del proceso, estbalecinedo el nuevo valor como el tiempo de ejecucion del proceso
         
         }
+        //SOLUCION TEMPORAL: AL CALCULAR EL TIEMPO DE EJECUCION, NO SE MARCA CUANDO TERMINA LA EJECUCION DEL ULTIMO PROCESO, POR LO QUE 
+        //HAY UN ERROR DE CALCULO. CUANDO SE SOLUCIONE ESO, BORRAR LA SIGUIENTE LINEA, 
+        ejecucionPromedio += tiempo;
         
         System.out.println("|| Memoria " +memoriaDisponible + " ||"); //Imprimimos memoria disponible
         System.out.println("|| Tiempo "+tiempo + " ||"); //Imprimimos tiempo
         
-        System.out.println("\n\nTiempo de respuesta promedio = " + (float)respuestaPromedio/(float)totProcesos);
+        System.out.println("\n\nTiempo de espera promedio = " + (float)esperaPromedio/(float)totProcesos);
+        System.out.println("\nTiempo de respuesta promedio = " + (float)respuestaPromedio/(float)totProcesos);
+        System.out.println("\nTiempo de ejecucion promedio = " + (float)ejecucionPromedio/(float)totProcesos + "\n\n");
+
+        
 
         procesos.imprimirContenido(); //Imprimimos contenido de la cola de procesos listos
         colaFIFO.imprimirContenido(); //Imprimimos contenido de la cola FIFO
