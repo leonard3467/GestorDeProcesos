@@ -50,5 +50,6 @@ public class Proyecto_SO {
         
         //Llamando al método simularCargaProcesos con argumentos de proceso, colaFIIFO, memoriaTot y quantumTot
         administrador.simularCargaProcesos(procesos, colaFIFO, memoriaTot, quantumTot); 
-    }
+
+        }
 }

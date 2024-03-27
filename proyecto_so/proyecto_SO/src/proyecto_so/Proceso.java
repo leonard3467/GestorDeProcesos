@@ -15,6 +15,11 @@ public class Proceso { //Clase llamada Proceso
     private float tiempoRespuesta;
     private float tiempoEjecucion;
     
+    private int banderaTiempos = 0;
+    private int esperaMax;
+    private int ejecutado;
+    private int ejecucionMax;
+    
     //---------------------------
     private int contador = 0; //Inicializando contador en 0 que nos sirve para contar las veces que sube un proceso a pc
 
@@ -91,6 +96,61 @@ public class Proceso { //Clase llamada Proceso
         this.tiempoRespuesta = tiempoRespuesta;
     }
     
+
+
+    
+    public int getBanderaTiempos() {
+        return banderaTiempos;
+    }
+
+    public int getEsperaMax() {
+        return esperaMax;
+    }
+
+    public int getEjecutado() {
+        return ejecutado;
+    }
+
+    public int getEjecucionMax() {
+        return ejecucionMax;
+    }
+
+    
+    
+    
+    
+    
+    
+    
+    
+    public void setTiempoRespuesta(float tiempoRespuesta) {
+        this.tiempoRespuesta = tiempoRespuesta;
+    }
+
+    public void setTiempoEjecucion(float tiempoEjecucion) {
+        this.tiempoEjecucion = tiempoEjecucion;
+    }
+
+    public void setBanderaTiempos(int banderaTiempos) {
+        this.banderaTiempos = banderaTiempos;
+    }
+
+    public void setEsperaMax(int esperaMax) {
+        this.esperaMax = esperaMax;
+    }
+
+    public void setEjecutado(int ejecutado) {
+        this.ejecutado = ejecutado;
+    }
+
+    public void setEjecucionMax(int ejecucionMax) {
+        this.ejecucionMax = ejecucionMax;
+    }
+    
+    
+   
+    
+    
     //Método contructor
     public Proceso(String id, String nombre, int tamano, int tiempoServicio, int tiempoLlegada) {
         this.id = id;
@@ -98,8 +158,8 @@ public class Proceso { //Clase llamada Proceso
         this.tamano = tamano;
         this.tiempoServicio = tiempoServicio;
         this.tiempoLlegada = tiempoLlegada;
-        this.tiempoEspera = tiempoEspera;
+        //this.tiempoEspera = tiempoEspera;
         //////////----------------------------
-        this.contador = contador;
+        //this.contador = contador;
     }
 }

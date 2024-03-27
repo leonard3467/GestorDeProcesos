@@ -16,7 +16,9 @@ public class AdministradorProcesos { //Clase de administrador de procesos
         int banderaEspacio=0; //Espacio de bandera inicia en 0 para controlar la asignación de memoria a los procesos.
         int tiempototal=procesos.sumarTiemposServicio(); //Nuestro tiempo total es dependiendo de la suma dada en la cola de procesos listos
         
- 
+        int esperaPromedio;
+        int respuestaPromedio;
+        int ejecucionPromedio; 
         
         System.out.println("\n<----->  Tiempo total de servicio de todos los procesos = "+tiempototal + " <----->");
         while ((!procesos.estaVacia() || !colaFIFO.estaVacia())|| tiempo!=tiempototal) { //Mientras haya procesos en la cola de procesos listos, haya procesos en la cola FIFO o el tiempo de la simulación no haya alcanzado el tiempo total de servicio de todos los procesos.
@@ -48,6 +50,11 @@ public class AdministradorProcesos { //Clase de administrador de procesos
                     System.out.println("Esperando proceso ...."); //Estamos esperando proceso
                 }else{//En otro caso
                 System.out.println("El proceso "+enEjecucion.getId()+" esta en ejecucion en el tiempo "+tiempo);} //Mostramos que proceso y en que tiempo se ejecuta
+                if(enEjecucion.getBanderaTiempos() == 0){
+                    enEjecucion.setEsperaMax(tiempo);
+                    enEjecucion.setBanderaTiempos(enEjecucion.getBanderaTiempos()+1);
+                }
+                enEjecucion.setBanderaTiempos(enEjecucion.getBanderaTiempos()+1);
                 bandera=1; //Indicamos que ya tenemos un proceso ejecutandose
             }
            
@@ -57,6 +64,7 @@ public class AdministradorProcesos { //Clase de administrador de procesos
                 if (enEjecucion.getTiempoServicio()==0) { //Si el tiempo de servicio del proceso en ejecución es 0 (terminó su ejecución)
                     memoriaDisponible += enEjecucion.getTamano(); //Sumammos el tamaño del proceso en ejecución a nuestra memoria disponible, liberando espacio
                     System.out.println("El proceso "+ enEjecucion.getId()+ " ha concluido en el tiempo "+tiempo +" liberando "+enEjecucion.getTamano() + " unidades de memoria :D"); //Imprimimos datos
+                    //enEjecucion.setEjecucionMax(tiempo);
                     System.out.println("Memoria disponible actual = "+memoriaDisponible); //Imprimimos memoria disponible actual
                     banderaEspacio=0; //Indicamos que hay suficiente espacio para cargar más procesos
                 } else{ //Si el tiempo de servicio del proceso en ejecución no ha terminado su ejecución 
@@ -68,6 +76,10 @@ public class AdministradorProcesos { //Clase de administrador de procesos
                         System.out.println("\nEsperando Proceso...."); //Marcamos que estamos esperando proceso
                     }else{
                     System.out.println("El proceso " + enEjecucion.getId() + " subio en el tiempo "+tiempo + " a la CPU");} //Indicamos cuando subió a CPU
+                    if(enEjecucion.getBanderaTiempos() == 0){
+                        enEjecucion.setEsperaMax(tiempo);
+                        enEjecucion.setBanderaTiempos(enEjecucion.getBanderaTiempos()+1);
+                    }
             }else{
                 
                 // Cuando el Quantum no se termina, pero el de rafaga ya se acabo
@@ -78,12 +90,19 @@ public class AdministradorProcesos { //Clase de administrador de procesos
                     Quantum=quantum; // Se reinicia el quantum
                     memoriaDisponible += enEjecucion.getTamano(); // Se libera la memoria ocupada por el proceso que ha completado su ejecución.
                     System.out.println("El proceso "+ enEjecucion.getId()+ " ha concluido en el tiempo "+tiempo +" liberando "+enEjecucion.getTamano()+" unidades de memoria :D"); //Imprimimos
+                    enEjecucion.setEjecucionMax(tiempo);
+
                     enEjecucion=colaFIFO.desencolar(); //Se desencola el siguiente proceso de la cola FIFO para ejecutarlo en la CPU.
                     
                     if(enEjecucion==null){//Si no hay nada ejecutandose
                         System.out.println("Esperando Proceso...."); //Imprimimos 
                     }else{
                     System.out.println("El proceso " + enEjecucion.getId() + " subio en el tiempo "+tiempo + " a la CPU");}//Indicamos cuando subió a CPU
+                    if(enEjecucion.getBanderaTiempos() == 0){
+                        enEjecucion.setEsperaMax(tiempo);
+                        enEjecucion.setBanderaTiempos(enEjecucion.getBanderaTiempos()+1);
+                    }
+
                  }
             }
             
@@ -93,7 +112,13 @@ public class AdministradorProcesos { //Clase de administrador de procesos
         Quantum--; //Restamos quatum
         tiempo++; //Restamos tiempo actual
             
-        enEjecucion.setTiempoEjecucion(enEjecucion.getTiempoServicio()-1);} //Actualizamos el tiempo de ejecucion del proceso actual, restando 1 al tiempo de servicio restante del proceso, estbalecinedo el nuevo valor como el tiempo de ejecucion del proceso
+        enEjecucion.setTiempoEjecucion(enEjecucion.getTiempoServicio()-1);
+        System.out.println("Espera max de "+ enEjecucion.getId()+ ": "+enEjecucion.getEsperaMax());
+        System.out.println("Ejecucion max de "+ enEjecucion.getId()+ ": "+enEjecucion.getEjecucionMax());
+
+        
+        } //Actualizamos el tiempo de ejecucion del proceso actual, restando 1 al tiempo de servicio restante del proceso, estbalecinedo el nuevo valor como el tiempo de ejecucion del proceso
+        
         }
         
         System.out.println("|| Memoria " +memoriaDisponible + " ||"); //Imprimimos memoria disponible
