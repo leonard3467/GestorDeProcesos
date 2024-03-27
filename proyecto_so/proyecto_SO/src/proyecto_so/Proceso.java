@@ -11,21 +11,14 @@ public class Proceso { //Clase llamada Proceso
     private int tamano;
     private int tiempoServicio; 
     private int tiempoLlegada;
-    private float tiempoEspera = 0;
-    private float tiempoRespuesta;
-    private float tiempoEjecucion;
-    
-    private int banderaTiempos = 0;
-    private int temp = 0;
-    private int esperaMin;
-    private int esperaMax;
-    private int ejecutado;
-    private int ejecucionMax;
-    private int banderaEspera = 0;
-    
-    //---------------------------
+    // 
+    private int tMaxEjecucion; 
+    private int tMaxEspera;
+    private int tPrimeraVez=-1;// priemra vez que sube 
+    // --- 
+    private float tEjecutado = 0;
     private int contador = 0; //Inicializando contador en 0 que nos sirve para contar las veces que sube un proceso a pc
-
+    // getters y seters
     public void setContador(int contador) { //Modifica el contador
         this.contador = contador;
     }
@@ -34,7 +27,6 @@ public class Proceso { //Clase llamada Proceso
         return contador;
     }
 
-    //Métodos 
     public String getId() { //Obteniendo el id del proceso
         return id; 
     }
@@ -66,15 +58,7 @@ public class Proceso { //Clase llamada Proceso
     public void setTiempoServicio(int tiempoServicio) { //Recibe y asigna el tiempo de servicio del proceso
         this.tiempoServicio = tiempoServicio;
     }
-    
-    public float getTiempoEjecucion() { //Obtiene el tiempo de ejecución
-        return tiempoEjecucion;
-    }
-
-    public void setTiempoEjecucion(int tiempoEjecucion) { //Recibe y asigna el tiempo de ejecución 
-        this.tiempoServicio = tiempoEjecucion;
-    }
-
+   
     public int getTiempoLlegada() { //Obtiene el tiempo de llegada del proceso
         return tiempoLlegada;
     }
@@ -83,99 +67,39 @@ public class Proceso { //Clase llamada Proceso
         this.tiempoLlegada = tiempoLlegada;
     }
 
-    public float getTiempoEspera() { //Obtiene el tiempo de espera del proceso
-        return tiempoEspera;
+    public int gettMaxEjecucion() {
+        return tMaxEjecucion;
     }
 
-    public void setTiempoEspera(float tiempoEspera) { //Recibe y asigna el tiempo de espera del proceso
-        this.tiempoEspera = tiempoEspera;
-    }
-    
-    public float getTiempoRespuesta() { //Obteniendo tiempo de respuesta del proceso
-        return tiempoRespuesta;
+    public void settMaxEjecucion(int tMaxEjecucion) {
+        this.tMaxEjecucion = tMaxEjecucion;
     }
 
-    public void setTiempoRespuesta(int tiempoRespuesta) { //Recibe y asigna tiempo de respuesta del proceso
-        this.tiempoRespuesta = tiempoRespuesta;
-    }
-    
-
-
-    
-    public int getBanderaTiempos() {
-        return banderaTiempos;
+    public int gettMaxEspera() {
+        return tMaxEspera;
     }
 
-    public int getEsperaMin() {
-        return esperaMin;
+    public void settMaxEspera(int tMaxEspera) {
+        this.tMaxEspera = tMaxEspera;
     }
 
-    public int getEjecutado() {
-        return ejecutado;
+    public int gettPrimeraVez() {
+        return tPrimeraVez;
     }
 
-    public int getEjecucionMax() {
-        return ejecucionMax;
+    public void settPrimeraVez(int tPrimeraVez) {
+        this.tPrimeraVez = tPrimeraVez;
     }
 
-    
-    
-    
-    
-    
-    
-    
-    
-    public void setTiempoRespuesta(float tiempoRespuesta) {
-        this.tiempoRespuesta = tiempoRespuesta;
+    public float gettEjecutado() {
+        return tEjecutado;
     }
 
-    public void setTiempoEjecucion(float tiempoEjecucion) {
-        this.tiempoEjecucion = tiempoEjecucion;
+    public void settEjecutado(float tEjecutado) {
+        this.tEjecutado = tEjecutado;
     }
 
-    public void setBanderaTiempos(int banderaTiempos) {
-        this.banderaTiempos = banderaTiempos;
-    }
 
-    public void setEsperaMin(int esperaMin) {
-        this.esperaMin = esperaMin;
-    }
-
-    public void setEjecutado(int ejecutado) {
-        this.ejecutado = ejecutado;
-    }
-
-    public void setEjecucionMax(int ejecucionMax) {
-        this.ejecucionMax = ejecucionMax;
-    }
-
-    public int getTemp() {
-        return temp;
-    }
-
-    public void setTemp(int temp) {
-        this.temp = temp;
-    }
-    
-   public void setEsperaMax(int esperaMax){
-       this.esperaMax = esperaMax;
-   } 
-   
-   public int getEsperaMax(){
-       return esperaMax;
-   }
-
-    public int getBanderaEspera() {
-        return banderaEspera;
-    }
-
-    public void setBanderaEspera(int banderaEspera) {
-        this.banderaEspera = banderaEspera;
-    }
-   
-   
-    
     
     //Método contructor
     public Proceso(String id, String nombre, int tamano, int tiempoServicio, int tiempoLlegada) {
@@ -184,8 +108,6 @@ public class Proceso { //Clase llamada Proceso
         this.tamano = tamano;
         this.tiempoServicio = tiempoServicio;
         this.tiempoLlegada = tiempoLlegada;
-        //this.tiempoEspera = tiempoEspera;
-        //////////----------------------------
-        //this.contador = contador;
+     
     }
 }

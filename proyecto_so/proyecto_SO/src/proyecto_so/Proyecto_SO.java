@@ -8,14 +8,14 @@ import java.util.Scanner; //Libreria para poder utilizar clase Scanner
 public class Proyecto_SO {
 
     public static void main(String[] args) {
-        
+        /*
         System.out.println("--> BIENVENIDO AL SIMULADOR DE PLANIFICADOR DE PROCESOS <---");
         
         Scanner scanner = new Scanner(System.in); // Inicializa el scanner
         
         System.out.println("\nPrimero, introduzca el valor que tendra la memoria: ");
         int memoriaTot =scanner.nextInt(); //Guarda el total de la memoria que se tiene
-        //float memoriaTot = scanner.nextFloat();
+      
         
         System.out.println("\nAhora, introduzca el Quantum que tendra cada proceso al ejecutarse: ");
         int quantumTot = scanner.nextInt(); //Se guarda el quantum que se desea 
@@ -49,7 +49,22 @@ public class Proyecto_SO {
         AdministradorProcesos administrador = new AdministradorProcesos();
         
         //Llamando al método simularCargaProcesos con argumentos de proceso, colaFIIFO, memoriaTot y quantumTot
-        administrador.simularCargaProcesos(procesos, colaFIFO, memoriaTot, quantumTot, totProcesos); 
+        administrador.simularCargaProcesos(procesos, colaFIFO, memoriaTot, quantumTot,totProcesos); 
+    */
+        ColaProcesosListos procesos = new ColaProcesosListos(); // Se inicializa la cola de procesos listos
+        procesos.insertarProceso(new Proceso("A", "Proceso 1", 1, 20, 0));
+        procesos.insertarProceso(new Proceso("C", "Proceso 3", 1, 8, 0));
+        procesos.insertarProceso(new Proceso("B", "Proceso 2", 1, 10, 0));
+        procesos.insertarProceso(new Proceso("D", "Proceso 4", 1, 2, 0));
+    
+        
+        procesos.imprimirContenido();
+        ColaFIFO colaFIFO = new ColaFIFO();
 
-        }
+        AdministradorProcesos administrador = new AdministradorProcesos();
+        
+        administrador.simularCargaProcesos(procesos, colaFIFO, 1000,4,4);
+
+    
+    }
 }
