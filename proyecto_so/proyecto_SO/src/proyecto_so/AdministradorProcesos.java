@@ -170,6 +170,7 @@ public class AdministradorProcesos { //Clase de administrador de procesos
         // Después del bucle, restablecer la bandera de espera para el siguiente ciclo
         enEjecucion.setBanderaEspera(0);
 
+
         
         } //Actualizamos el tiempo de ejecucion del proceso actual, restando 1 al tiempo de servicio restante del proceso, estbalecinedo el nuevo valor como el tiempo de ejecucion del proceso
         
