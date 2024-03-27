@@ -17,9 +17,11 @@ public class Proceso { //Clase llamada Proceso
     
     private int banderaTiempos = 0;
     private int temp = 0;
+    private int esperaMin;
     private int esperaMax;
     private int ejecutado;
     private int ejecucionMax;
+    private int banderaEspera = 0;
     
     //---------------------------
     private int contador = 0; //Inicializando contador en 0 que nos sirve para contar las veces que sube un proceso a pc
@@ -104,8 +106,8 @@ public class Proceso { //Clase llamada Proceso
         return banderaTiempos;
     }
 
-    public int getEsperaMax() {
-        return esperaMax;
+    public int getEsperaMin() {
+        return esperaMin;
     }
 
     public int getEjecutado() {
@@ -136,8 +138,8 @@ public class Proceso { //Clase llamada Proceso
         this.banderaTiempos = banderaTiempos;
     }
 
-    public void setEsperaMax(int esperaMax) {
-        this.esperaMax = esperaMax;
+    public void setEsperaMin(int esperaMin) {
+        this.esperaMin = esperaMin;
     }
 
     public void setEjecutado(int ejecutado) {
@@ -156,7 +158,22 @@ public class Proceso { //Clase llamada Proceso
         this.temp = temp;
     }
     
-    
+   public void setEsperaMax(int esperaMax){
+       this.esperaMax = esperaMax;
+   } 
+   
+   public int getEsperaMax(){
+       return esperaMax;
+   }
+
+    public int getBanderaEspera() {
+        return banderaEspera;
+    }
+
+    public void setBanderaEspera(int banderaEspera) {
+        this.banderaEspera = banderaEspera;
+    }
+   
    
     
     
