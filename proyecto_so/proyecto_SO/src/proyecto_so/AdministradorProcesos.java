@@ -76,7 +76,7 @@ public class AdministradorProcesos { //Clase de administrador de procesos
                         tEjecucion=tEjecucion+(enEjecucion.gettMaxEjecucion()-enEjecucion.getTiempoLlegada());
                         tRespuesta=tRespuesta+(enEjecucion.gettPrimeraVez()-enEjecucion.getTiempoLlegada());
                         tEspera=tEspera+(enEjecucion.gettMaxEspera()-enEjecucion.getTiempoLlegada()-enEjecucion.gettEjecutado());
-                        System.out.println("|| Soy el proceso " + enEjecucion.getId() + "|| -> Tiempo de ejecucion maximo " + tEjecucion + " <-- || --> Tiempo de llegada " + tEjecucion + " <-- || --> Tiempo de espera " + tEspera + " <-- ||");
+                        System.out.println("|| Soy el proceso " + enEjecucion.getId() + "|| -> Tiempo de ejecucion maximo " + enEjecucion.gettMaxEjecucion() + " <-- || --> Tiempo de llegada " + enEjecucion.getTiempoLlegada() + " <-- || --> Tiempo de espera " + enEjecucion.gettMaxEspera() + " <-- ||");
                     } else{ //Si el tiempo de servicio del proceso en ejecución no ha terminado su ejecución 
                         colaFIFO.encolar(enEjecucion, quantum); //Lo volvemos a enconlar a nuestra cola FIFO
                     }
@@ -109,7 +109,7 @@ public class AdministradorProcesos { //Clase de administrador de procesos
                         tEjecucion=tEjecucion+(enEjecucion.gettMaxEjecucion()-enEjecucion.getTiempoLlegada());
                         tRespuesta=tRespuesta+(enEjecucion.gettPrimeraVez()-enEjecucion.getTiempoLlegada());
                         tEspera=tEspera+(enEjecucion.gettMaxEspera()-enEjecucion.getTiempoLlegada()-enEjecucion.gettEjecutado());
-                        System.out.println("|| Soy el proceso " + enEjecucion.getId() + "|| -> Tiempo de ejecucion maximo " + tEjecucion + " <-- || --> Tiempo de llegada " + tEjecucion + " <-- || --> Tiempo de espera " + tEspera + " <-- ||");                        
+                        System.out.println("|| Soy el proceso " + enEjecucion.getId() + "|| -> Tiempo de ejecucion maximo " + enEjecucion.gettMaxEjecucion() + " <-- || --> Tiempo de llegada " + enEjecucion.getTiempoLlegada() + " <-- || --> Tiempo de espera " + enEjecucion.gettMaxEspera() + " <-- ||");               
                         enEjecucion=colaFIFO.desencolar(); //Se desencola el siguiente proceso de la cola FIFO para ejecutarlo en la CPU.
                         
 
