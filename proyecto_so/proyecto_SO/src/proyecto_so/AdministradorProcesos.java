@@ -83,6 +83,7 @@ public class AdministradorProcesos { //Clase de administrador de procesos
                     
                     if(enEjecucion==null){ //Si no hay nada ejecutandose
                             System.out.println("\nEsperando Proceso...."); //Marcamos que estamos esperando proceso
+                            continue;
                         }else{
                         if(enEjecucion.gettPrimeraVez()==-1){
                             enEjecucion.settPrimeraVez(tiempo);
@@ -108,7 +109,8 @@ public class AdministradorProcesos { //Clase de administrador de procesos
                         enEjecucion=colaFIFO.desencolar(); //Se desencola el siguiente proceso de la cola FIFO para ejecutarlo en la CPU.
                         
                         if(enEjecucion==null){//Si no hay nada ejecutandose
-                            System.out.println("Esperando Proceso...."); //Imprimimos 
+                            System.out.println("\nEsperando Proceso...."); //Marcamos que estamos esperando proceso
+                            continue;
                         }else{
                             System.out.println("El proceso " + enEjecucion.getId() + " subio en el tiempo "+tiempo + " a la CPU");
                             if(enEjecucion.gettPrimeraVez()==-1){
@@ -129,16 +131,17 @@ public class AdministradorProcesos { //Clase de administrador de procesos
         ///////
             
         if(enEjecucion==null){ //Si la ejecución está vacía 
-            System.out.println("Esperando Proceso...."); //Imprimimos   
+            System.out.println("Esperando Proceso...."); //Imprimimos  
+            
         }else{
             Quantum--; //Restamos quatum
             enEjecucion.setTiempoServicio(enEjecucion.getTiempoServicio()-1);
             System.out.println();
             //Actualizamos el tiempo de ejecucion del proceso actual, restando 1 al tiempo de servicio restante del proceso, estbalecinedo el nuevo valor como el tiempo de ejecucion del proceso
             
-        
+            
         } 
-        tiempo++; //aumentamos tiempo actual
+        tiempo++;
             
         }
         System.out.println("------------------------");
@@ -153,8 +156,8 @@ public class AdministradorProcesos { //Clase de administrador de procesos
         
         
         
+        
         /*
-        un breve analisis mañana se quita
         System.out.println("tEsperaMax "+enEjecucion.gettMaxEspera());
         System.out.println("tllegada "+enEjecucion.getTiempoLlegada());
         System.out.println("tEjecuto "+enEjecucion.gettEjecutado());
