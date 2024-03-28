@@ -20,7 +20,7 @@ public class AdministradorProcesos { //Clase de administrador de procesos
         int tiempototal=(procesos.sumarTiemposServicio()+tiempo); //Nuestro tiempo total es dependiendo de la suma dada en la cola de procesos listos
 
         System.out.println("\n<----->  Tiempo total de servicio de todos los procesos = "+tiempototal + " <----->");
-        while ((!procesos.estaVacia() || !colaFIFO.estaVacia())|| tiempo<tiempototal) { //Mientras haya procesos en la cola de procesos listos, haya procesos en la cola FIFO o el tiempo de la simulación no haya alcanzado el tiempo total de servicio de todos los procesos.
+        while ((!procesos.estaVacia() || !colaFIFO.estaVacia())|| enEjecucion!=null) { //Mientras haya procesos en la cola de procesos listos, haya procesos en la cola FIFO o el tiempo de la simulación no haya alcanzado el tiempo total de servicio de todos los procesos.
             // Bucle mientras existan procesos en la cola de procesos
             while(procesos.estaVacia()==false && procesos.getInicio().proceso.getTiempoLlegada()<=tiempo && banderaEspacio==0){ //Mientras la cola de procesos no esté vacia y el tiempo de llegada del primer proceso sea menor o igual al tiempo actual de la simulación y la bandera de espacio sea 0
                 Proceso proceso = procesos.getInicio().getProceso(); //Obtenemos el primer proceso de la cola de procesos listos
@@ -151,25 +151,16 @@ public class AdministradorProcesos { //Clase de administrador de procesos
             
         }
         System.out.println("------------------------");
-        
-        tEjecucion=(tEjecucion+(enEjecucion.gettMaxEjecucion()-enEjecucion.getTiempoLlegada() ))/totProcesos;
-        tRespuesta=(tRespuesta+(enEjecucion.gettPrimeraVez()-enEjecucion.getTiempoLlegada() ))/totProcesos;
-        tEspera=(tEspera+(enEjecucion.gettMaxEspera()-enEjecucion.getTiempoLlegada()-enEjecucion.gettEjecutado() ))/totProcesos;
+
+        tEjecucion=tEjecucion/totProcesos;
+        tRespuesta=tRespuesta/totProcesos;
+        tEspera=tEspera/totProcesos;
+                
         System.out.println("|| Memoria " +memoriaDisponible + " ||"); //Imprimimos memoria disponible
         System.out.println("|| Tiempo "+tiempo + " ||"); //Imprimimos tiempo
         procesos.imprimirContenido(); //Imprimimos contenido de la cola de procesos listos
         colaFIFO.imprimirContenido(); //Imprimimos contenido de la cola FIFO
         
-        
-        
-        
-        /*
-        System.out.println("tEsperaMax "+enEjecucion.gettMaxEspera());
-        System.out.println("tllegada "+enEjecucion.getTiempoLlegada());
-        System.out.println("tEjecuto "+enEjecucion.gettEjecutado());
-        System.out.println("tprimera vez "+enEjecucion.gettPrimeraVez());
-        System.out.println("tEjecucionMax "+enEjecucion.gettMaxEjecucion());
-        */
         System.out.println("el tiempo de espera es "+tEspera);
         System.out.println("el tiempo de ejecucion es "+tEjecucion);
         System.out.println("el tiempo de respuesta es "+tRespuesta);
