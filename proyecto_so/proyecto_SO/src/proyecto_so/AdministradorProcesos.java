@@ -63,7 +63,7 @@ public class AdministradorProcesos { //Clase de administrador de procesos
             
             if (enEjecucion!=null){
                 // siempre debemos de evitar un caso critico en donde en ejecuccion es nullo
-                // ya qeu no podemos accesder a campos nullos y nos lanzara un error
+                // ya que no podemos accesder a campos nullos y nos lanzara un error
             
                 if (Quantum==0) { //Si nuestro quantum es 0 (Quantum agotado)
                     System.out.println("\n---| Tiempo: " +tiempo +" |---"); //Imprimimos tiempo actual
@@ -76,6 +76,7 @@ public class AdministradorProcesos { //Clase de administrador de procesos
                         tEjecucion=tEjecucion+(enEjecucion.gettMaxEjecucion()-enEjecucion.getTiempoLlegada());
                         tRespuesta=tRespuesta+(enEjecucion.gettPrimeraVez()-enEjecucion.getTiempoLlegada());
                         tEspera=tEspera+(enEjecucion.gettMaxEspera()-enEjecucion.getTiempoLlegada()-enEjecucion.gettEjecutado());
+                        System.out.println("|| Soy el proceso " + enEjecucion.getId() + "|| -> Tiempo de ejecucion maximo " + tEjecucion + " <-- || --> Tiempo de llegada " + tEjecucion + " <-- || --> Tiempo de espera " + tEspera + " <-- ||");
                     } else{ //Si el tiempo de servicio del proceso en ejecución no ha terminado su ejecución 
                         colaFIFO.encolar(enEjecucion, quantum); //Lo volvemos a enconlar a nuestra cola FIFO
                     }
@@ -93,7 +94,9 @@ public class AdministradorProcesos { //Clase de administrador de procesos
                             enEjecucion.settMaxEspera(tiempo);
                             enEjecucion.settMaxEjecucion((tiempo+enEjecucion.getTiempoServicio()));
                         }
-                        System.out.println("El proceso " + enEjecucion.getId() + " subio en el tiempo "+tiempo + " a la CPU");} //Indicamos cuando subió a CPU
+                        System.out.println("El porceso " + enEjecucion.getId() + " subio en el tiempo "+tiempo + " a la CPU");} //Indicamos cuando subió a CPU
+                        colaFIFO.imprimirContenido();
+
                 }else{
 
                     // Cuando el Quantum no se termina, pero el de rafaga ya se acabo
@@ -106,13 +109,16 @@ public class AdministradorProcesos { //Clase de administrador de procesos
                         tEjecucion=tEjecucion+(enEjecucion.gettMaxEjecucion()-enEjecucion.getTiempoLlegada());
                         tRespuesta=tRespuesta+(enEjecucion.gettPrimeraVez()-enEjecucion.getTiempoLlegada());
                         tEspera=tEspera+(enEjecucion.gettMaxEspera()-enEjecucion.getTiempoLlegada()-enEjecucion.gettEjecutado());
+                        System.out.println("|| Soy el proceso " + enEjecucion.getId() + "|| -> Tiempo de ejecucion maximo " + tEjecucion + " <-- || --> Tiempo de llegada " + tEjecucion + " <-- || --> Tiempo de espera " + tEspera + " <-- ||");                        
                         enEjecucion=colaFIFO.desencolar(); //Se desencola el siguiente proceso de la cola FIFO para ejecutarlo en la CPU.
                         
+
                         if(enEjecucion==null){//Si no hay nada ejecutandose
                             System.out.println("\nEsperando Proceso...."); //Marcamos que estamos esperando proceso
                             continue;
                         }else{
                             System.out.println("El proceso " + enEjecucion.getId() + " subio en el tiempo "+tiempo + " a la CPU");
+                            colaFIFO.imprimirContenido();
                             if(enEjecucion.gettPrimeraVez()==-1){
                                    enEjecucion.settPrimeraVez(tiempo);
                             }
